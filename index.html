@@ -46,12 +46,19 @@ cursor: pointer;
 z-index: 10;
 opacity: 0;
 transition: opacity 0.3s ease-in-out;
-border-radius: 9999px; /* fully rounded */
-width: 2.5rem; /* 40px */
-height: 2.5rem; /* 40px */
+border-radius: 9999px;
+width: 3rem;
+height: 3rem;
 }
 .row-container:hover .scroll-arrow {
 opacity: 1;
+}
+@media (max-width: 768px) {
+.scroll-arrow {
+opacity: 1;
+width: 2.5rem;
+height: 2.5rem;
+}
 }
 .scroll-arrow.left {
 left: 0.5rem;
@@ -66,7 +73,7 @@ right: 0.5rem;
 <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 p-4 transition-colors duration-500">
 <div class="flex justify-between items-center">
 <div>
-<a href="#" class="text-2xl md:text-3xl font-extrabold text-red-600 no-underline hoverpacity-80 transition">
+<a href="#" class="text-2xl md:text-3xl font-extrabold text-red-600 no-underline hover:opacity-80 transition">
 CinemaCrafter
 </a>
 <p class="text-xs text-gray-400 mt-1">Created By : Rafael</p>
@@ -76,16 +83,16 @@ CinemaCrafter
 </nav>
 <!-- Banner Section: The big featured movie at the top -->
 <header id="banner" class="relative text-white object-cover bg-cover bg-center" style="height: 56.25vw; max-height: 800px;">
-<div class="ml-8 pt-48 mdt-56 h-full">
+<div class="ml-4 md:ml-8 pt-20 md:pt-56 h-full">
 <h1 id="banner-title" class="text-3xl md:text-6xl font-extrabold pb-2"></h1>
 <div class="flex space-x-2 my-4">
-<button id="banner-play-btn" class="bg-white text-black font-bold rounded px-6 mdx-8 py-2 hover:bg-gray-300 transition text-sm md:text-base flex items-center justify-center">
-<svg xmlns="SVG namespace" class="h-6 w-6 mr-2" viewBox="0 0 20 20" fill="currentColor">
+<button id="banner-play-btn" class="bg-white text-black font-bold rounded px-6 md:px-8 py-2 hover:bg-gray-300 transition text-sm md:text-base flex items-center justify-center">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" viewBox="0 0 20 20" fill="currentColor">
 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
 </svg>
 Play
 </button>
-<button id="banner-info-btn" class="bg-gray-500 bg-opacity-70 text-white font-bold rounded px-6 mdx-8 py-2 hover:bg-gray-600 transition text-sm md:text-base">
+<button id="banner-info-btn" class="bg-gray-500 bg-opacity-70 text-white font-bold rounded px-6 md:px-8 py-2 hover:bg-gray-600 transition text-sm md:text-base">
 More Info
 </button>
 </div>
@@ -94,21 +101,21 @@ More Info
 <div class="absolute bottom-0 left-0 right-0 banner-fade-bottom"></div>
 </header>
 
+
+<!-- Movie Rows: Container for all the movie carousels -->
+<main id="movie-rows" class="px-4 md:px-10 pb-16">
+<!-- Rows will be dynamically added here by JavaScript -->
 <!-- Native Banner Ad -->
-<div class="px-4 mdx-10 mb-8">
+<div class="px-4 md:px-10 mb-8">
 <script async="async" data-cfasync="false" src="https://pl27721251.effectivecpmnetwork.com/ce72de51f64fd2bbd05b05d02fb58533/invoke.js"></script>
 <div id="container-ce72de51f64fd2bbd05b05d02fb58533"></div>
 </div>
-
-<!-- Movie Rows: Container for all the movie carousels -->
-<main id="movie-rows" class="px-4 mdx-10 pb-16">
-<!-- Rows will be dynamically added here by JavaScript -->
 </main>
 <!-- Details Modal: Pops up when a movie is clicked -->
 <div id="modal-overlay" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
-<div id="modal-container" class="relative bg-zinc-900 w-full max-w-4xl rounded-lg shadow-lg overflow-hidden">
+<div id="modal-container" class="relative bg-zinc-900 w-full max-w-4xl rounded-lg shadow-lg overflow-hidden md:max-h-[90vh] max-h-screen">
 <button id="modal-close-btn" class="absolute top-3 right-3 text-white bg-black bg-opacity-50 rounded-full h-8 w-8 flex items-center justify-center z-20 hover:bg-opacity-75 transition">
-<svg xmlns="SVG namespace" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
 </svg>
 </button>
@@ -209,7 +216,7 @@ poster.alt = movie.name || movie.title;
 poster.loading = 'lazy';
 poster.dataset.movieId = movie.id;
 poster.dataset.mediaType = movie.media_type || (isLargeRow ? 'tv' : 'movie');
-poster.className = `object-contain transition-transform duration-300 hover:scale-105 md:hover:scale-110 cursor-pointer ${isLargeRow ? 'max-h-60' : 'max-h-28'} mr-3 rounded`;
+poster.className = `object-contain transition-transform duration-300 hover:scale-105 md:hover:scale-110 cursor-pointer ${isLargeRow ? 'max-h-48 md:max-h-60' : 'max-h-24 md:max-h-28'} mr-3 rounded`;
 
 poster.addEventListener('click', handlePosterClick);
 postersContainer.appendChild(poster);
@@ -251,7 +258,7 @@ const trailer = details.videos?.results.find(video => video.site === 'YouTube' &
 const noTrailerMessage = document.getElementById('no-trailer-message');
 
 if (trailer) {
-youtubePlayer.src = `https://www.youtube.com/embed/${trailer.key}?autoplay=1&controls=0&rel=0`;
+youtubePlayer.src = `https://www.youtube.com/embed/${trailer.key}?autoplay=1&controls=1&rel=0`;
 youtubePlayer.classList.remove('hidden');
 noTrailerMessage.classList.add('hidden');
 } else {
@@ -360,14 +367,7 @@ navbar.style.backgroundColor = 'transparent';
 }
 });
 </script>
-<script src="https://pl29655079.effectivecpmnetwork.com/02/3a/d0/023ad04687db5852d2257ab09764b5fd.js"></script>
 
-<!-- Smartlink Ad -->
-<footer class="text-center py-8">
-<a href="https://www.effectivecpmnetwork.com/ad7hib1e?key=75169365dc534af118b3f2c7864f3554" target="_blank" rel="noopener noreferrer" class="inline-block bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition">
-Watch More Content
-</a>
-</footer>
 
 </body>
 </html>
